@@ -2,6 +2,10 @@ import * as React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import MainScreen from './screens/main';
 import DoctorListScreen from './screens/doctors-list';
+import AppoinmentsScreen from './screens/appointments';
+import SpecialtiesListScreen from './screens/specialties';
+import ChatsScreen from './screens/chats';
+import ChatScreen from './screens/chat';
 import DoctorAppoinmentScreen from './screens/appointments-doctor';
 import PaymentAppointmentScreen from './screens/payment-appointment';
 import PaymentAppointmentScreenSuccess from './screens/payment-appointment-success';
@@ -26,8 +30,20 @@ const App = () => {
             name="Main" 
             component={MainScreen}/>
         <Drawer.Screen 
+            name="Appointments" 
+            component={AppoinmentsScreen}/>
+        <Drawer.Screen 
+            name="Chats" 
+            component={ChatsScreen}/>
+        <Drawer.Screen 
+            name="Chat" 
+            component={ChatScreen}/>
+        <Drawer.Screen 
             name="DoctorList" 
             component={DoctorListScreen}/>
+        <Drawer.Screen 
+            name="SpecialtiesList" 
+            component={SpecialtiesListScreen}/>
         <Drawer.Screen 
             name="DoctorAppoinment" 
             component={DoctorAppoinmentScreen}/>

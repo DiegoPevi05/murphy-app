@@ -15,10 +15,10 @@ interface DoctorCardProps extends DoctorCard {
 
 const DoctorCard = (doctorCardProps: DoctorData) => {
 
-  const {id,name,cost,image,description,details,speciality,rating,onPressBookDoctor} = doctorCardProps;
+  const {id,name,cost,image,description,details,specialty,rating,onPressBookDoctor} = doctorCardProps;
 
   const handlePressDoctorBook = useCallback(() => {
-    onPressBookDoctor({id,name,cost,image,description,details,speciality,rating});
+    onPressBookDoctor({id,name,cost,image,description,details,specialty,rating});
   },[id])
 
   return (
@@ -73,7 +73,7 @@ const DoctorCard = (doctorCardProps: DoctorData) => {
             {description}
           </Text>
           <Text fontSize="sm" color="murphy.gray">
-            Especilidad:{speciality}
+            Especilidad:{specialty}
           </Text>
           <Button onPress={handlePressDoctorBook} h={8} >Buscar Cita</Button>
         </Box>

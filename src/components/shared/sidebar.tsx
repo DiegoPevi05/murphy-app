@@ -25,16 +25,24 @@ const Sidebar = (props: DrawerContentComponentProps) => {
     navigation.closeDrawer()
   }, [navigation])
 
-  const handlePressMenuMain = useCallback(() => {
-    navigation.navigate('Main')
+  const handlePressHistory = useCallback(() => {
+    navigation.navigate('History')
   }, [navigation])
 
-  const handlePressMenuBills = useCallback(() => {
-    navigation.navigate('Bills')
+  const handlePressPersonalData = useCallback(() => {
+    navigation.navigate('Personal Data')
+  }, [navigation])
+
+  const handlePressPaymentMethod = useCallback(() => {
+    navigation.navigate('Payment Method')
+  }, [navigation])
+
+  const handlePressSettings = useCallback(() => {
+    navigation.navigate('Settings')
   }, [navigation])
 
   const handlePressSignOut = useCallback(() => {
-    navigation.navigate('Begin')
+    console.log(signout)
   }, [navigation])
 
 
@@ -42,76 +50,97 @@ const Sidebar = (props: DrawerContentComponentProps) => {
     <AnimatedColorBox
       safeArea
       flex={1}
-      bg={useColorModeValue('lightBlue.100', 'lightBlue.300')}
+      bg="murphy.emeraldLight"
       p={7}
     >
       <VStack flex={1} space={2}>
         <HStack justifyContent="space-between">
-          <IconButton
-            onPress={handlePressMenuMain}
+          <Avatar
+            source={require('../../assets/images/diegoProfile.jpg')}
+            size="xl"
             borderRadius={100}
-            variant="outline"
-            borderColor={useColorModeValue('darkBlue.300', 'darkBlue.300')}
-            _icon={{
-              as: Octicons,
-              name: 'gear',
-              size: 6,
-              color: useColorModeValue('darkBlue.300', 'darkBlue.300')
-            }}
-            bg={currentRoute === 'MyAccount' ? "blueGray.500" : 'transparent'}
+            mb={6}
+            borderColor="murphy.emeraldDark"
+            borderWidth={3}
           />
           <IconButton
             onPress={handlePressBackButton}
             borderRadius={100}
             variant="outline"
-            borderColor={useColorModeValue('darkBlue.300', 'darkBlue.300')}
+            borderColor="murphy.emeraldDark"
+            h={10}
+            w={10}
             _icon={{
               as: Feather,
               name: 'chevron-left',
               size: 6,
-              color: useColorModeValue('darkBlue.300', 'darkBlue.300')
+              color: 'murphy.emeraldDark',
             }}
           />
         </HStack>
-        <Avatar
-          source={require('../../assets/images/diegoProfile.jpg')}
-          size="xl"
-          borderRadius={100}
-          mb={6}
-          borderColor="blueGray.800"
-          borderWidth={3}
-        />
         <Heading mb={4} size="xl"
-          color={useColorModeValue('darkBlue.300', 'darkBlue.600')}
+          color={"murphy.emeraldDark"}
         >
           Diego Peña Vicente
         </Heading>
         <MenuButton
-          active={currentRoute === 'Main'}
-          onPress={handlePressMenuMain}
-          icon="check"
-          pro={false} 
-        >
-          {t('Rentals')}
-        </MenuButton>
-        <MenuButton
-          active={currentRoute === 'Bills'}
-          onPress={handlePressMenuBills}
+          active={currentRoute === 'History'}
+          onPress={handlePressHistory}
+          iconLibrary="Entypo"
           icon="text-document"
           pro={false} 
         >
-          {t('Bills')}
+          Historial de Citas
+        </MenuButton>
+
+        <MenuButton
+          active={currentRoute === 'History'}
+          onPress={handlePressHistory}
+          iconLibrary="AntDesign"
+          icon="user"
+          pro={false} 
+        >
+          Información Personal
+        </MenuButton>
+
+        <MenuButton
+          active={currentRoute === 'History'}
+          onPress={handlePressHistory}
+          iconLibrary="Entypo"
+          icon="credit-card"
+          pro={false} 
+        >
+          Información de Pago
+        </MenuButton>
+
+        <MenuButton
+          active={currentRoute === 'History'}
+          onPress={handlePressHistory}
+          iconLibrary="FontAwesome"
+          icon="gear"
+          pro={false} 
+        >
+          Configuración
+        </MenuButton>
+        <MenuButton
+          active={currentRoute === 'History'}
+          onPress={handlePressHistory}
+          iconLibrary="Entypo"
+          icon="help"
+          pro={false} 
+        >
+          Ayuda
+        </MenuButton>
+        <MenuButton
+          active={currentRoute === 'History'}
+          onPress={handlePressHistory}
+          iconLibrary="Ionicons"
+          icon="close-circle"
+          pro={false} 
+        >
+          Cerrar Sesión
         </MenuButton>
       </VStack>
-      <Center>
-        <ThemeToggle />
-        <Button
-          color={useColorModeValue("white","white")}
-          bg={useColorModeValue("red.400","red.400")}
-          onPress={handlePressSignOut}>
-          {t('Sign Out')}
-        </Button>
-      </Center>
     </AnimatedColorBox>
   )
 }

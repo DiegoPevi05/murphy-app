@@ -1,7 +1,25 @@
-export interface DoctorData {
-  id:number;
-  image:string;
-  name: string;
+export interface User {
+  name: string
+  email: string
+  image: string
+  id: string
+}
+
+export interface Chat {
+  id: string
+  messages: Message[]
+}
+
+export interface Message {
+  id: string
+  senderId: string
+  receiverId: string
+  text: string
+  timestamp: number
+}
+
+
+export interface DoctorData extends User {
   specialty: string;
   description:string;
   details:string;
@@ -10,8 +28,8 @@ export interface DoctorData {
 }
 
 export interface DoctorTimeSheets {
-  id:number;
-  doctorId:number;
+  id:string;
+  doctorId:string;
   dates:TimeSheetData[];
 }
 
@@ -26,4 +44,13 @@ export interface PaymentData {
   time:string;
   userId:number;
   amount:number;
+}
+
+export interface Appoinment{
+  id:number;
+  doctorId:number;
+  specialty:string;
+  doctorName:string;
+  date:string;
+  time:string;
 }

@@ -21,8 +21,8 @@ import {DoctorData,DoctorTimeSheets} from '../interfaces/global';
 import {extractAllDates, retrieveTimesByDate} from '../utils/helper';
 
 const doctorTimeSheets:DoctorTimeSheets = {
-  id:1,
-  doctorId:1,
+  id:"1",
+  doctorId:"1",
   dates:[
     {
       date:"2021-10-01",

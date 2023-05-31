@@ -1,56 +1,68 @@
 import React from 'react'
 import { Button, Icon, IButtonProps } from 'native-base'
-import { Foundation,Entypo} from '@expo/vector-icons'
+import { FontAwesome5,FontAwesome,MaterialIcons,MaterialCommunityIcons,Ionicons,Feather,Foundation,Entypo} from '@expo/vector-icons'
 
 interface Props extends IButtonProps {
   active: boolean
   icon: string
   children: React.ReactNode
+  iconLibrary?: 'MaterialCommunityIcons'|'FontAwesome5' | 'FontAwesome' | 'MaterialIcons' | 'Ionicons' | 'Feather'|'Entypo';
   pro:boolean
 }
 
-const MenuButton = ({ active, icon, children,pro, ...props }: Props) => {
+const MenuButton = ({ active, icon,iconLibrary, children,pro, ...props }: Props) => {
+
+  let IconComponent;
+
+  switch (iconLibrary) {
+    case 'MaterialCommunityIcons':
+      IconComponent = MaterialCommunityIcons;
+      break;
+    case 'FontAwesome5':
+      IconComponent = FontAwesome5;
+      break;
+    case 'FontAwesome':
+      IconComponent = FontAwesome;
+      break;
+    case 'MaterialIcons':
+      IconComponent = MaterialIcons;
+      break;
+    case 'Ionicons':
+      IconComponent = Ionicons;
+      break;
+    case 'Feather':
+      IconComponent = Feather;
+      break;
+    case 'Entypo':
+      IconComponent = Entypo;
+      break;
+    default:
+      IconComponent = FontAwesome5; 
+      break;
+  }
+
   return (
     <Button
       size="lg"
-      _light={{
-        colorScheme: 'blue',
-        _pressed: {
-          bg: 'darkBlue.300'
-        },
-        _text: {
-          color: active ? 'blue.50' : 'blueGray.900'
-        }
+      bg={active ? "murphy.emeraldDark" : 'transparent'}
+      _text={{
+        color : active ? 'white' : 'murphy.gray',
       }}
-      _dark={{
-        colorScheme: 'darkBlue',
-        _pressed: {
-          bg: 'darkBlue.300'
-        },
-        _text: {
-          color: active ? 'blue.50' : undefined
-        }
-      }}
-      bg={active ? "afito.blue" : 'transparent'}
       variant="solid"
       justifyContent="flex-start"
-
-      leftIcon={<Icon as={Entypo} name={icon} size="sm" opacity={0.5} 
-        _light={{
-          color:active ? 'blue.50':'blueGray.900'
-        }}
-        _dark={{
-          color:active ? 'blue.50':'blueGray.900'
-        }}
+      leftIcon={<Icon as={IconComponent} name={icon} size="md" opacity={1} mr={2} 
+        color={active ? 'white' : 'murphy.emeraldDark'}
       />}
+      _pressed={{
+        bg: 'murphy.emeraldDark',
+        _text: {
+          color: 'white',
+        },
+      }}
+
       {...props}
-        rightIcon = { pro === true ? <Icon as={Foundation} name={"crown"} size="sm" opacity={1} 
-          _light={{
-            color:active ? 'yellow.600':'yellow.600'
-          }}
-          _dark={{
-            color:active ? 'yellow.600':'yellow.600'
-          }}
+        rightIcon = { pro === true ? <Icon as={Foundation} name={"crown"} size="lg" opacity={1} 
+          color={active ? 'yellow.400' : 'yellow.400'}
         /> : undefined}
     >
       {children}
