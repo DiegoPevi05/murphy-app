@@ -95,6 +95,7 @@ const InputChat = () => {
         onFocus={onFocusChange}
         onBlur={onBlurChange}
         onChangeText={onChangeMessage}
+        borderWidth={0}
         InputRightElement={<Button bg="murphy.emeraldDark" rounded="none" w="1/6" h="full" onPress={handleSendMessage}>
           <Icon
             as={Ionicons}

@@ -24,7 +24,30 @@ import DoctorCard from '../components/doctor-card';
 import { DrawerNavigationProp } from '@react-navigation/drawer'
 import { AntDesign,FontAwesome,Ionicons } from '@expo/vector-icons'
 import { makeStyledComponent } from '../utils/styled'
-import {DoctorData} from '../interfaces/global';
+import {DoctorData,NotificationData} from '../interfaces/global';
+
+const notificationDataConst:NotificationData[] = [
+  {
+    id:"1",
+    timestamp: 1622457600000, // 31 May 2023 00:00:00 GMT
+    text:"Tienes una cita importante en 10 minutos",
+  },
+  {
+    id:"2",
+    timestamp: 1622457600000, // 31 May 2023 00:00:00 GMT
+    text:"Tienes una cita importante en 20 minutos",
+  },
+  {
+    id:"3",
+    timestamp: 1622457600000, // 31 May 2023 00:00:00 GMT
+    text:"Tienes una cita importante en 30 minutos",
+  },
+  {
+    id:"4",
+    timestamp: 1622457600000, // 31 May 2023 00:00:00 GMT
+    text:"Tienes una cita importante en 40 minutos",
+  }
+]
 
 const doctorData:DoctorData[] = [
   { id:"2",name: "Freedman", image: "https://www.pngall.com/wp-content/uploads/2018/05/Doctor-PNG-Images.png",email:"anythin",description:"Doctor en psicologia", 
@@ -47,10 +70,18 @@ export default function MainScreen({navigation}:any){
     navigation.navigate({name:'SpecialtiesList'});
   },[])
 
+  const handlePressNotifications = useCallback(() => {
+    navigation.navigate({name:'Notifications', params:{notificationData:notificationDataConst}});
+  },[])
+
 
   const handlePressDoctorBook = useCallback((doctor:DoctorData) => {
     navigation.navigate({name:'DoctorAppoinment',params:{doctor:doctor}});
   },[])
+
+  const handlePressMenuButton = useCallback(() => {
+    navigation.openDrawer()
+  }, [navigation])
 
   const handleFooterNavPress = (routeName: string) => {
     navigation.navigate({name:routeName});
@@ -61,7 +92,7 @@ export default function MainScreen({navigation}:any){
   return(
     <AnimatedColorBox
       flex={1}
-      bg={useColorModeValue('white', 'warmGray.50')}
+      bg='white'
       w="full"
     >
       <Box 
@@ -82,10 +113,12 @@ export default function MainScreen({navigation}:any){
           alignItems="center"
           gap={4}
         >
-          <Avatar
-            source={require('../assets/images/diegoProfile.jpg')}
-            size="md"
-          />
+          <Pressable onPress={handlePressMenuButton}>
+            <Avatar
+              source={require('../assets/images/diegoProfile.jpg')}
+              size="md"
+            />
+          </Pressable>
           <Text color="murphy.gray" >Diego Peña Vicente</Text>
         </Box>
         <Box
@@ -106,6 +139,7 @@ export default function MainScreen({navigation}:any){
           />
           <Box position="relative">
             <IconButton
+              onPress={handlePressNotifications}
               borderRadius={100}
               _icon={{
                 as: FontAwesome,
@@ -114,15 +148,26 @@ export default function MainScreen({navigation}:any){
                 color: 'murphy.gray'
               }}
             />
-            <Badge
-              position="absolute"
-              top={1}
-              end={2}
-              bg="red.500"
-              borderRadius="full"
-              h={4}
-              w={4}
-            />
+            {notificationDataConst.length > 0 && (
+              <>
+                <Badge
+                  position="absolute"
+                  top={1}
+                  end={2}
+                  bg="red.500"
+                  borderRadius="full"
+                  h={5}
+                  w={5}
+                />
+                <Text
+                  position="absolute"
+                  top={1}
+                  end={8}
+                  alignSelf="center"
+                  color="white"
+                >{notificationDataConst.length}</Text>
+              </>
+            )}
           </Box>
         </Box>
       </Box>

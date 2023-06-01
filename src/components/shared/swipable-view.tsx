@@ -19,6 +19,7 @@ const StyledView = makeStyledComponent(Animated.View)
 
 interface Props extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
   children: React.ReactNode
+  SingleAction?: boolean
   backView?: React.ReactNode
   onSwipeLeft?: () => void
 }
@@ -27,8 +28,9 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window')
 const SWIPE_THRESHOLD = -SCREEN_WIDTH * 0.2
 
 const SwipeView = (props: Props) => {
-  const { children, backView, onSwipeLeft, simultaneousHandlers } = props
+  const { children,SingleAction, backView, onSwipeLeft, simultaneousHandlers } = props
   const translateX = useSharedValue(0)
+  const MaxDistanceSlide = SingleAction ? 0.2 : 0.4;
 
   const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
     onActive: event => {
@@ -37,7 +39,7 @@ const SwipeView = (props: Props) => {
     onEnd: () => {
       const shouldBeDismissed = translateX.value < SWIPE_THRESHOLD
       if (shouldBeDismissed) {
-        translateX.value = withTiming(-SCREEN_WIDTH*0.4)
+        translateX.value = withTiming(-SCREEN_WIDTH*MaxDistanceSlide)
       } else {
         translateX.value = withTiming(0)
       }

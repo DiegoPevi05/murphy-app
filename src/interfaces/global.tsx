@@ -18,13 +18,18 @@ export interface Message {
   timestamp: number
 }
 
-
 export interface DoctorData extends User {
   specialty: string;
   description:string;
   details:string;
   rating:number;
   cost:number;
+}
+
+export interface NotificationData {
+  id:string;
+  timestamp:number;
+  text:string;
 }
 
 export interface DoctorTimeSheets {
@@ -51,6 +56,5 @@ export interface Appoinment{
   doctorId:number;
   specialty:string;
   doctorName:string;
-  date:string;
-  time:string;
+  timestamp: number;
 }

@@ -14,7 +14,7 @@ import {
 } from 'native-base'
 
 
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import { KeyboardAvoidingView, Platform,Keyboard } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler'
 import { AnimatePresence, View } from 'moti'
 import AnimatedColorBox from '../components/shared/animated-color-box'
@@ -22,6 +22,7 @@ import { Entypo,Ionicons } from '@expo/vector-icons';
 import { makeStyledComponent } from '../utils/styled'
 import {Chat,Message} from '../interfaces/global';
 import InputChat from '../components/InputChat';
+import Messages from '../components/messages';
 
 const StyledScrollView = makeStyledComponent(ScrollView)
 
@@ -54,7 +55,21 @@ const chatData: Chat = {
       senderId: "2",
       receiverId: "1",
       text: "Estoy trabajando en un proyecto. ¿Y tú?",
-      timestamp: 1622457780000, // 31 May 2023 00:03:00 GMT
+      timestamp: 1685620800000, // 31 May 2023 00:03:00 GMT
+    },
+    {
+      id: "5",
+      senderId: "2",
+      receiverId: "1",
+      text: "Ya estoy listo para mi cita",
+      timestamp: 1685620800000, // 31 May 2023 00:03:00 GMT
+    },
+    {
+      id: "6",
+      senderId: "2",
+      receiverId: "1",
+      text: "Gracias",
+      timestamp: 1685620800000, // 31 May 2023 00:03:00 GMT
     },
   ],
 };
@@ -70,6 +85,35 @@ export default function ChatScreen({route,navigation}:any){
   const handlePressGoBack = useCallback(() => {
     navigation.navigate({name:'Chats'});
   },[])
+
+
+
+  const [keyboardShown, setKeyboardShown] = useState(false);
+  const [keyboardOffset, setKeyboardOffset] = useState(0);
+
+  useEffect(() => {
+    Keyboard.addListener("keyboardDidShow", keyboardDidShow);
+    Keyboard.addListener("keyboardDidHide", keyboardDidHide);
+
+    return () => {
+      Keyboard.removeListener("keyboardDidShow", keyboardDidShow);
+      Keyboard.removeListener("keyboardDidHide", keyboardDidHide);
+    };
+  }, []);
+
+  const keyboardDidShow = (e) => {
+    setKeyboardShown(true);
+    setKeyboardOffset(e.endCoordinates.height );
+  };
+
+  const keyboardDidHide = () => {
+    setKeyboardShown(false);
+    setKeyboardOffset(0);
+  };
+
+  const inputChatHeight = 24; // Adjust as per actual height
+  const scrollViewStyle = keyboardShown ? { marginBottom: keyboardOffset + inputChatHeight } : {};
+  //const scrollViewStyle = keyboardShown ? { marginBottom: keyboardOffset } : {};
 
 
   return(
@@ -112,6 +156,21 @@ export default function ChatScreen({route,navigation}:any){
           borderColor="murphy.emeraldDark"
         />
       </Box>
+
+      <StyledScrollView 
+        flex={1} 
+        ref={refScrollView} 
+        w="full" 
+        h="full" 
+        px="4" 
+        mb={12} 
+        style={scrollViewStyle}
+        showsVerticalScrollIndicator={false}
+      >
+        <AnimatePresence>
+          <Messages initialMessages={messages} sessionID={sessionID} />
+        </AnimatePresence>
+      </StyledScrollView>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}

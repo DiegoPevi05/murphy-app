@@ -18,7 +18,18 @@ interface AppointmentCardProps extends Appoinment, Pick<PanGestureHandlerProps, 
 
 const AppointmentCard = (doctorCardProps: AppointmentCardProps) => {
 
-  const {simultaneousHandlers,id,doctorId,specialty,doctorName,date,time,onPressChatDoctor,onEditing,onRemove} = doctorCardProps;
+  const {simultaneousHandlers,id,doctorId,specialty,doctorName,timestamp,onPressChatDoctor,onEditing,onRemove} = doctorCardProps;
+
+  const appointmentDate = new Date(timestamp);
+  const hours = appointmentDate.getHours();
+  const minutes = appointmentDate.getMinutes();
+  const formattedHours = String(hours).padStart(2, '0');
+  const formattedMinutes = String(minutes).padStart(2, '0');
+  const year = appointmentDate.getFullYear();
+  const month = String(appointmentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+  const day = String(appointmentDate.getDate()).padStart(2, '0');
+  const formattedDate = `${year}-${month}-${day}`;
+
 
   const handlePressDoctorChat = useCallback(() => {
     onPressChatDoctor(doctorId);
@@ -101,10 +112,10 @@ const AppointmentCard = (doctorCardProps: AppointmentCardProps) => {
               {doctorName}
             </Text>
             <Text fontSize="sm" color="gray.600">
-              Fecha de cita: {date}
+              Fecha de cita: {formattedDate}
             </Text>
             <Text fontSize="sm" color="gray.600">
-              Hora de cita: {time}
+              Hora de cita: {`${formattedHours}:${formattedMinutes}`}
             </Text>
             <Text fontSize="sm" color="murphy.gray">
               Especilidad:{specialty}

@@ -22,7 +22,7 @@ import { DrawerNavigationProp } from '@react-navigation/drawer'
 import { Entypo,Ionicons } from '@expo/vector-icons'; 
 import { makeStyledComponent } from '../utils/styled'
 import {Appoinment} from '../interfaces/global';
-import { subMonths,addMonths, format} from 'date-fns';
+import { subMonths,addMonths, format, isSameMonth} from 'date-fns';
  
 
 
@@ -35,80 +35,70 @@ const dataAppointment: Appoinment[] = [
     doctorId: 101,
     specialty: "Cardiologia",
     doctorName: "Dr. Smith",
-    date: "2023-05-01",
-    time: "09:30"
+    timestamp: 1686578392000
   },
   {
     id: 2,
     doctorId: 102,
     specialty: "Oftalmologia",
     doctorName: "Dr. Johnson",
-    date: "2023-06-04",
-    time: "10:30"
+    timestamp: 1686578392000
   },
   {
     id: 3,
     doctorId: 103,
     specialty: "Pediatria",
     doctorName: "Dr. Davis",
-    date: "2023-05-07",
-    time: "11:30"
+    timestamp: 1686578392000
   },
   {
     id: 4,
     doctorId: 104,
     specialty: "General",
     doctorName: "Dr. Miller",
-    date: "2023-06-10",
-    time: "12:30"
+    timestamp: 1686578392000
   },
   {
     id: 5,
     doctorId: 105,
     specialty: "Cardiologia",
     doctorName: "Dr. Wilson",
-    date: "2023-06-13",
-    time: "13:30"
+    timestamp: 1686578392000
   },
   {
     id: 6,
     doctorId: 106,
     specialty: "Oftalmologia",
     doctorName: "Dr. Moore",
-    date: "2023-06-16",
-    time: "14:30"
+    timestamp: 1686578392000
   },
   {
     id: 7,
     doctorId: 107,
     specialty: "Pediatria",
     doctorName: "Dr. Taylor",
-    date: "2023-06-19",
-    time: "15:30"
+    timestamp: 1686578392000
   },
   {
     id: 8,
     doctorId: 108,
     specialty: "General",
     doctorName: "Dr. Anderson",
-    date: "2023-06-22",
-    time: "16:30"
+    timestamp: 1686578392000
   },
   {
     id: 9,
     doctorId: 109,
     specialty: "Cardiologia",
     doctorName: "Dr. Thomas",
-    date: "2023-06-25",
-    time: "17:30"
+    timestamp: 1686578392000
   },
   {
     id: 10,
     doctorId: 110,
     specialty: "Oftalmologia",
     doctorName: "Dr. Jackson",
-    date: "2023-06-28",
-    time: "18:30"
+    timestamp: 1686578392000
   }
 ];
 
@@ -136,7 +126,10 @@ export default function AppoinmentsScreen({navigation}:any){
   }
 
   useEffect(()=>{
-    setAppointmentsMonth(dataAppointment.filter((appoinment) => appoinment.date.includes(format(currentMonth,'yyyy-MM'))))
+    setAppointmentsMonth(dataAppointment.filter((appointment) => {
+      const appointmentDate = new Date(appointment.timestamp);
+      return isSameMonth(appointmentDate,currentMonth);
+    }));
   },[currentMonth])
 
   const handlePressGoBack = useCallback(() => {
@@ -187,7 +180,7 @@ export default function AppoinmentsScreen({navigation}:any){
         />
         <Text color="murphy.emeraldDark" fontSize={20} fontWeight="bold">Citas</Text>
       </Box>
-      <Calendar currentMonth={currentMonth} prevMonth={prevMonth} nextMonth={nextMonth}/>
+      <Calendar appoinments={AppointmentsMonth} currentMonth={currentMonth} prevMonth={prevMonth} nextMonth={nextMonth}/>
       {AppointmentsMonth.length > 0 ? 
         <StyledScrollView flex={1} ref={refScrollView} w="full" px="4" mb={24}>
           <AnimatePresence>
@@ -199,8 +192,7 @@ export default function AppoinmentsScreen({navigation}:any){
                 doctorId={appoinment.doctorId}
                 specialty={appoinment.specialty}
                 doctorName={appoinment.doctorName}
-                date={appoinment.date}
-                time={appoinment.time}
+                timestamp={appoinment.timestamp}
                 onPressChatDoctor={handlePressChatDoctor}
                 onEditing={handleEditingAppoinment}
                 onRemove={handleRemoveAppoinment}

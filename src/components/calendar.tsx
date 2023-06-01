@@ -2,7 +2,7 @@ import React,{useCallback, useState,useEffect} from 'react'
 import { VStack, HStack, Box, Text,IconButton } from 'native-base';
 import { View } from 'moti'
 import { FontAwesome, Entypo} from '@expo/vector-icons'
-import { startOfMonth, endOfMonth, eachDayOfInterval, format, add, getDay, startOfWeek, endOfWeek, setHours,subMonths,addMonths } from 'date-fns';
+import { startOfMonth, endOfMonth, eachDayOfInterval, format, add, getDay, startOfWeek, endOfWeek, setHours,subMonths,addMonths,isSameDay } from 'date-fns';
 import { makeStyledComponent } from '../utils/styled'
 import {Appoinment} from '../interfaces/global';
 
@@ -19,6 +19,12 @@ interface CalendarProps {
 
 const Calendar = (calendarProps:CalendarProps) => {
   const {appoinments,currentMonth,prevMonth,nextMonth} = calendarProps;
+  const [datesAppoinments,setDatesAppoinments] = useState<Date[]>([]); 
+
+  useEffect(() => {
+    const dates = appoinments.map((appointment) => new Date(appointment.timestamp));
+    setDatesAppoinments(dates);
+  }, [appoinments]);
 
   const today = new Date();
   const [weeks, setWeeks] = useState([]);
@@ -82,7 +88,9 @@ const Calendar = (calendarProps:CalendarProps) => {
                 h="8"
                 w="8"
                 rounded="full"
-                bg={day && day.getDate() === today.getDate() && today.getMonth() === day.getMonth() ? 'murphy.emeraldDark' : 'transparent'}
+                bg={day && datesAppoinments.some(date => isSameDay(date, day)) ?
+                  'green.200' :
+                   day && isSameDay(day, today) ?  'murphy.emeraldDark' : 'transparent'}
                 border={day && day.getDate() === today.getDate() ? '2' : '0'}
                 borderColor="murphy.emeraldDark"
                 alignItems="center"
@@ -90,7 +98,7 @@ const Calendar = (calendarProps:CalendarProps) => {
                 my={1}
                 mx={2}
               >
-                <Text color={day && day.getDate() === today.getDate() && today.getMonth() === day.getMonth() ? 'white' : 'black'}>
+                <Text color={day && isSameDay(day, today)  ? 'white' : 'black'}>
                   {day ? format(day, 'dd') : ''}
                 </Text>
               </Box>

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Box, Button, Icon,Text, IButtonProps } from 'native-base'
+import {Box,IconButton, Button, Icon,Text, IButtonProps } from 'native-base'
 import { FontAwesome5,FontAwesome,MaterialIcons,MaterialCommunityIcons,Ionicons,Feather} from '@expo/vector-icons'
 
 interface Props extends IButtonProps {
@@ -40,26 +40,25 @@ const ButtonIcon = ({type,icon,iconLibrary,label, children,pro, ...props }: Prop
 
   return (
   <Box alignItems="center">
-    <Button
-      size="md"
+    <IconButton
       w={16}
       h={16}
       rounded="full"
       bg="murphy.emeraldLight"
-      px={0} 
-      py={0} 
+      _icon={{
+        as:IconComponent,
+        name:icon,
+        size: "2xl",
+        color: 'murphy.emeraldDark'
+      }}
       _pressed={{
-        bg: 'murphy.emerald',
+        bg: 'murphy.emeraldDark',
+        _icon: {
+          color: 'white'
+        }
       }}
       {...props}
-    >
-      <Icon
-          as={IconComponent}
-          name={icon}
-          color={props.onClick ? 'white' : 'murphy.emeraldDark'}
-          size="2xl"
-        />
-    </Button>
+    />
     <Text color="murphy.gray">{label}</Text>
   </Box>
   )

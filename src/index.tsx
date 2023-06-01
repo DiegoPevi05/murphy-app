@@ -1,6 +1,11 @@
 import * as React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
+import SignInScreen from './screens/sign-in';
+import SignUpScreen from './screens/sing-up';
+import ForgotPassword from './screens/forgot-password';
 import MainScreen from './screens/main';
+import NotificationScreen from './screens/notifications';
+import HistoryAppoinmentsScreen from './screens/history-appointments';
 import DoctorListScreen from './screens/doctors-list';
 import AppoinmentsScreen from './screens/appointments';
 import SpecialtiesListScreen from './screens/specialties';
@@ -27,8 +32,23 @@ const App = () => {
         }}
       >
         <Drawer.Screen 
+            name="SignIn" 
+            component={SignInScreen}/>
+        <Drawer.Screen 
+            name="SignUp" 
+            component={SignUpScreen}/>
+        <Drawer.Screen 
+            name="ForgotPassword" 
+            component={ForgotPassword}/>
+        <Drawer.Screen 
             name="Main" 
             component={MainScreen}/>
+        <Drawer.Screen 
+            name="Notifications" 
+            component={NotificationScreen}/>
+        <Drawer.Screen 
+            name="HistoryAppoinments" 
+            component={HistoryAppoinmentsScreen}/>
         <Drawer.Screen 
             name="Appointments" 
             component={AppoinmentsScreen}/>

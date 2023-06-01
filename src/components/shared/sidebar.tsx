@@ -26,23 +26,23 @@ const Sidebar = (props: DrawerContentComponentProps) => {
   }, [navigation])
 
   const handlePressHistory = useCallback(() => {
-    navigation.navigate('History')
+    navigation.navigate('HistoryAppoinments')
   }, [navigation])
 
   const handlePressPersonalData = useCallback(() => {
     navigation.navigate('Personal Data')
   }, [navigation])
 
-  const handlePressPaymentMethod = useCallback(() => {
-    navigation.navigate('Payment Method')
-  }, [navigation])
-
   const handlePressSettings = useCallback(() => {
     navigation.navigate('Settings')
   }, [navigation])
 
+  const handlePressHep = useCallback(() => {
+    navigation.navigate('Help')
+  }, [navigation])
+
   const handlePressSignOut = useCallback(() => {
-    console.log(signout)
+    navigation.navigate('SignIn')
   }, [navigation])
 
 
@@ -94,28 +94,17 @@ const Sidebar = (props: DrawerContentComponentProps) => {
         </MenuButton>
 
         <MenuButton
-          active={currentRoute === 'History'}
-          onPress={handlePressHistory}
+          active={currentRoute === 'PersonalData'}
+          onPress={handlePressPersonalData}
           iconLibrary="AntDesign"
           icon="user"
           pro={false} 
         >
           Información Personal
         </MenuButton>
-
         <MenuButton
-          active={currentRoute === 'History'}
-          onPress={handlePressHistory}
-          iconLibrary="Entypo"
-          icon="credit-card"
-          pro={false} 
-        >
-          Información de Pago
-        </MenuButton>
-
-        <MenuButton
-          active={currentRoute === 'History'}
-          onPress={handlePressHistory}
+          active={currentRoute === 'Settings'}
+          onPress={handlePressSettings}
           iconLibrary="FontAwesome"
           icon="gear"
           pro={false} 
@@ -123,8 +112,8 @@ const Sidebar = (props: DrawerContentComponentProps) => {
           Configuración
         </MenuButton>
         <MenuButton
-          active={currentRoute === 'History'}
-          onPress={handlePressHistory}
+          active={currentRoute === 'Help'}
+          onPress={handlePressHep}
           iconLibrary="Entypo"
           icon="help"
           pro={false} 
@@ -132,8 +121,8 @@ const Sidebar = (props: DrawerContentComponentProps) => {
           Ayuda
         </MenuButton>
         <MenuButton
-          active={currentRoute === 'History'}
-          onPress={handlePressHistory}
+          active={true}
+          onPress={handlePressSignOut}
           iconLibrary="Ionicons"
           icon="close-circle"
           pro={false} 
